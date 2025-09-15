@@ -25,7 +25,6 @@ export default async function Home() {
     <div className="container mx-auto p-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-4">NextAuth.js v5 示例</h1>
-        
         {session ? (
           <div className="bg-green-100 p-4 rounded-lg mb-4">
             <p className="text-green-800">
