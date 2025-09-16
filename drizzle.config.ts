@@ -3,12 +3,7 @@ export default defineConfig({
     schema: './src/server/db/schema.ts',
     dialect: 'postgresql',
     dbCredentials: {
-        host: 'localhost',
-        port: 5432,
-        user: 'postgres',
-        password: 'mysecretpassword',
-        database: 'postgres',
-        ssl: false,
+        url: process.env.DATABASE_URL!,
     },
     out: './drizzle',
     verbose: true,
