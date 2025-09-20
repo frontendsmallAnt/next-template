@@ -1,15 +1,23 @@
+'use client'
 import { Button } from "@/components/ui/button"
 import { db } from "@/server/db/db"
 import { Users } from "@/server/db/schema"
 import { auth } from "@/auth"
 import UserInfo from './UserInfo'
+import { setUpClient } from '@/utils/api'
 import { SignInButton, SignOutButton } from "@/components/auth-buttons"
+import { useEffect } from "react"
 
-export default async function Home() {
-  const session = await auth()
+export default function Home() {
+
+  useEffect(() => {
+    console.log(111)
+    setUpClient.hello.query()
+  }, [])
+  // const session = await auth()
 
   // 方法1: 使用 select 选择特定字段
-  const users = await db.select().from(Users)
+  // const users = await db.select().from(Users)
 
   // 方法2: 使用 where 条件查询
   // const users = await db.select().from(Users).where(eq(Users.id, 1))
@@ -19,13 +27,12 @@ export default async function Home() {
   
   // 方法4: 使用预处理语句
   // const users = await db.prepare('SELECT * FROM users').execute()
-  console.log(users, session, 'uuuuuuuuuu')
   
   return (
     <div className="container mx-auto p-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-4">NextAuth.js v5 示例</h1>
-        {session ? (
+        {/* {session ? (
           <div className="bg-green-100 p-4 rounded-lg mb-4">
             <p className="text-green-800">
               欢迎, {session.user?.name || session.user?.email}!
@@ -40,10 +47,10 @@ export default async function Home() {
             <p className="text-blue-800 mb-2">您尚未登录</p>
             <SignInButton />
           </div>
-        )}
+        )} */}
       </div>
 
-      <div className="mb-8">
+      {/* <div className="mb-8">
         <h2 className="text-xl font-semibold mb-4">数据库用户列表</h2>
         {users.length > 0 ? (
           <div className="space-y-2">
@@ -57,7 +64,7 @@ export default async function Home() {
         ) : (
           <p className="text-gray-500">没有找到用户</p>
         )}
-      </div>
+      </div> */}
 
       <UserInfo />
     </div>
