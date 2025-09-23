@@ -1,5 +1,6 @@
 import { initTRPC, TRPCError } from '@trpc/server'
 import { auth } from "@/auth"
+
 export const createContext = async () => {
     //获取session
     const session = await auth()
@@ -8,7 +9,7 @@ export const createContext = async () => {
     }
 }
 const t = initTRPC.context<typeof createContext>().create()
-const { router, procedure, middleware } = t
+const { router, procedure, middleware, createCallerFactory } = t
 
 const middlewareObj = middleware(async({ctx, next}) => {
     const now = Date.now();
@@ -40,3 +41,5 @@ export const testRouter = router({
 })
 
 export type TestRouter = typeof testRouter
+
+export const serverCaller = createCallerFactory(testRouter)

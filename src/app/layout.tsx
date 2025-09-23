@@ -1,9 +1,9 @@
-'use client'
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { SessionProvider } from "next-auth/react";
-import { TRPCProvider } from "@/app/TrpcProvider";
+// 需要创建 providers.tsx 文件并导出 Providers 组件
+import { Providers } from "./providers";
 import "./globals.css";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -29,11 +29,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SessionProvider>
-          <TRPCProvider>
-            {children}
-          </TRPCProvider>
-        </SessionProvider>
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );
