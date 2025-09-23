@@ -6,14 +6,22 @@ import { auth } from "@/auth"
 import UserInfo from './UserInfo'
 import { setUpClient } from '@/utils/api'
 import { SignInButton, SignOutButton } from "@/components/auth-buttons"
-import { useEffect } from "react"
+import { useEffect, memo, useCallback } from "react"
 
-export default function Home() {
+function Home() {
+  // 使用 useCallback 缓存函数，避免每次渲染都创建新函数
+  const initializeClient = useCallback(async () => {
+    console.log('Home component initialized')
+    try {
+      await setUpClient.hello.query()
+    } catch (error) {
+      console.error('Failed to initialize client:', error)
+    }
+  }, [])
 
   useEffect(() => {
-    console.log(111)
-    setUpClient.hello.query()
-  }, [])
+    initializeClient()
+  }, [initializeClient])
   // const session = await auth()
 
   // 方法1: 使用 select 选择特定字段
@@ -70,3 +78,6 @@ export default function Home() {
     </div>
   );
 }
+
+// 使用 memo 优化渲染性能，避免不必要的重新渲染
+export default memo(Home)
